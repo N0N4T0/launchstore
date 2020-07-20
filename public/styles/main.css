@@ -28,6 +28,12 @@ body {
     background-color: #f9f9f9;
 }
 
+.container {
+    width: 90%;
+    max-width: 940px;
+    margin: 0 auto;
+}
+
 
 /* HEADER */
 header, footer {
@@ -85,4 +91,16 @@ nav.primary ul {
 nav.primary ul li a {
     display: flex;
     align-items: center;
+
+    color: white;
+
+    transition: 300ms;
+}
+
+nav.primary ul li a:hover {
+    color: var(--primary-color);
+}
+
+nav.primary ul li i {
+    margin-right: 8px;
 }
