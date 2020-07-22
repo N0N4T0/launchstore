@@ -6,12 +6,12 @@
     <form method="POST" action="/products">
     
         <div class="header">
-            <h3>Cadastrar Produto</h3>
+            <h3>Cadastrar Produto {{productId}}</h3>
         </div>
 
         <div class="fields">
 
-                {% include 'products/fields.njk' %}
+            {% include 'products/fields.njk' %}
 
         </div>    
 
