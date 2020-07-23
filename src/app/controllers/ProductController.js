@@ -3,6 +3,7 @@ const { formatPrice } = require("../../lib/utils")
 const Category = require("../models/Category")
 const Product = require("../models/Product")
 
+
 module.exports = {
 
     create(req, res) {
@@ -69,6 +70,12 @@ module.exports = {
 
         return res.redirect(`/products/${req.body.id}/edit`)
 
+    },
+
+    async delete(req,res) {
+        await Product.delete(req.body.id)
+
+        return res.redirect('/products/create')
     }
 
 }
