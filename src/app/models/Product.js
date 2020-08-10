@@ -4,7 +4,7 @@ module.exports = {
     all() {
         return db.query(`
         SELECT * FROM products
-        ORDERBY updated_at DESC  
+        ORDER BY updated_at DESC  
         `)
     },
 
