@@ -6,7 +6,7 @@ const ProductController = require("../src/app/controllers/ProductController")
 
 // Rotas
 routes.get('/', function(req, res) {
-    return res.render("layout.njk")
+    return res.render("home/index.njk")
 })
 
 
