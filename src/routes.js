@@ -4,11 +4,18 @@ const multer = require("./app/middlewares/multer")
 
 const ProductController = require("../src/app/controllers/ProductController")
 const HomeController = require("../src/app/controllers/HomeController")
+const SearchController = require("../src/app/controllers/SearchController")
 
-// Rotas
+
+// Home
 routes.get('/', HomeController.index)
 
 
+// Search
+routes.get('/products/search', SearchController.index)
+
+
+// Products
 routes.get('/products/create', ProductController.create)
 routes.get('/products/:id', ProductController.show)
 routes.get('/products/:id/edit', ProductController.edit)
@@ -18,11 +25,11 @@ routes.put('/products', multer.array("photos", 6), ProductController.put)
 routes.delete('/products', ProductController.delete)
 
 
-
-
-//Alias
+// Alias
 routes.get('/ads/create', function(req,res){
     return res.redirect("/products/create")
 })
+
+
 
 module.exports = routes
