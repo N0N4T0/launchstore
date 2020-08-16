@@ -10,7 +10,7 @@ module.exports = {
             ${key}
             `
 
-            Object.keys(filters).map(field => {
+            Object.keys(filters[key]).map(field => {
                 //cpf = cpf
                 query = `${query} ${field} = '${filters[key][field]}'`
             })

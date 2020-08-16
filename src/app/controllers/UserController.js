@@ -6,7 +6,7 @@ module.exports = {
         return res.render("user/register")
     },
 
-   async post(req, res) {
+    async post(req, res) {
         const keys = Object.keys(req.body)
             
         for(key of keys) {
@@ -15,12 +15,22 @@ module.exports = {
             }
         }
 
-        const { email, cpf_cnpj } = req.body
+        let { email, cpf_cnpj, password, passwordRepeat } = req.body
+
+        cpf_cnpj = cpf_cnpj.replace(/\D/g, "")
+
         const user = await User.findOne({
             where: {email},
             or: {cpf_cnpj}
         })
 
+        if (user) return res.send('Users exists')
+
+        if (password != passwordRepeat) {
+            return res.send('Password Mismatch')
+        }
+
+        return res.send('passed')
 
 
     }
