@@ -6,7 +6,7 @@ module.exports = {
         let query = `SELECT * FROM users`
 
         Object.keys(filters).map(key => {
-            //where | and 
+            //where | OR | and 
             query = `${query}
             ${key}
             `
@@ -59,4 +59,26 @@ module.exports = {
         }
 
     },
+
+    async update(id, fields) {
+        let query = "UPDATE users SET"
+    
+        Object.keys(fields).map((key, index, array) => {
+            if ((index + 1) < array.length) {
+                query = `${query}
+                    ${key} = '${fields[key]}',
+                `
+            } else {
+                //last iteration, evitando adcionar vírgula no ultimo campo da tabela
+                query = `${query}
+                    ${key} = '${fields[key]}'
+                    WHERE id = ${id}
+                `    
+            }
+        })
+
+        await db.query(query)
+    
+        return
+    }
 }
