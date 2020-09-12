@@ -51,6 +51,7 @@ async function post (req, res, next) {
         error: 'Usuário já cadastrado.'
     })
 
+    //ver se a senha bate
     if (password != passwordRepeat) {
         return res.render('user/register', {
             user: req.body,
