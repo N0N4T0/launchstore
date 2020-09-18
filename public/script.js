@@ -54,24 +54,43 @@ const Mask = {
 
 }
 
+
+//veja na web no console -> 
+//PhotosUpload.input.files
+//PhotosUpload.input.files.length
+//PhotosUpload.files.length
 const PhotosUpload = {
     input: "",
     preview: document.querySelector('#photos-preview'), 
-    uploadLimit: 6,
+    uploadLimit: 6, //limita o maximo de fotos
     files: [],
+
+    //pega o this de acordo com o input
     handleFileInput(event) {
+
+        //desestrutura os files e associa eles ao fileList
         const {files: fileList} = event.target
+
+
         PhotosUpload.input = event.target
 
         if (PhotosUpload.hasLimit(event)) return
 
+        //fileList = é um tipo de lista
+        //transforma o fileList em array
         Array.from(fileList).forEach(file => {
             PhotosUpload.files.push(file)
             
+            //FileReader = constructo que ler arquivos
             const reader = new FileReader()
 
+            //quando estiver pronto execute uma function
             reader.onload = () => {
                 const image = new Image() // cria tag html <img>
+
+                //na iamgem que criar coloca um source
+                //garante que o resultado vai ser string
+                //reader.result = resultado do carregamento do readAsDataURL()
                 image.src = String(reader.result)
 
                 const div = PhotosUpload.getContainer(image)
@@ -79,6 +98,7 @@ const PhotosUpload = {
                 PhotosUpload.preview.appendChild(div)
             }
 
+            //ficará pronto no momento que ele ler isso aqui
             reader.readAsDataURL(file)
         })
         
@@ -89,6 +109,7 @@ const PhotosUpload = {
         const { uploadLimit, input, preview } = PhotosUpload
         const { files: fileList } = input    
 
+        //avisa se o numero de fotos inseridas for maior que o limite de 6
         if (fileList.length > uploadLimit) {
             alert(`Envie no máximo ${uploadLimit} fotos`)
             event.preventDefault()
@@ -98,10 +119,14 @@ const PhotosUpload = {
 
         const photosDiv = []
         preview.childNodes.forEach(item => {
+            //pra cada filho faça um push no array photosDiv[]
+            //só adciona elementos do tipo photo
             if (item.classList && item.classList.value == "photo")
                 photosDiv.push(item)
         })
 
+        //soma quantidade de fotos ja existentes com adcionadas
+        //previne se tiver mais que 6
         const totalPhotos = fileList.length + photosDiv.length
         if (totalPhotos > uploadLimit) {
             alert("Você atingiu o limite máximo de fotos?")
@@ -123,7 +148,10 @@ const PhotosUpload = {
     },
     
     getContainer(image) {
+        //div receberá a criação da div
         const div = document.createElement('div')
+
+        //div com class photo
         div.classList.add('photo')
 
         div.onclick = PhotosUpload.removePhoto
@@ -136,6 +164,7 @@ const PhotosUpload = {
     },
 
     getRemoveButton() {
+        //criando material icon de remoção
         const button = document.createElement('i')
 
         button.classList.add('material-icons')
@@ -145,11 +174,19 @@ const PhotosUpload = {
     },
 
     removePhoto(event) {
-        const photoDiv = event.target.parentNode // i @ <div class="photo">
+        //event target = i
+        //parentNode = acima dele
+        const photoDiv = event.target.parentNode // <div class="photo">
+
         const photosArray = Array.from(PhotosUpload.preview.children)
+        
         const index = photosArray.indexOf(photoDiv)
 
+        //splice = aplicado no array para retirar uma posição no array
+        //segundo parâmetro é quanto vai remover
         PhotosUpload.files.splice(index, 1)
+
+        //chama novamente a função atualizando o file que foi removido.
         PhotosUpload.input.files = PhotosUpload.getAllFiles()
 
         photoDiv.remove()
